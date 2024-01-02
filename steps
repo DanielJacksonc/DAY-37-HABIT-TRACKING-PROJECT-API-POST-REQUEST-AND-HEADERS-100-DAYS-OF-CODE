@@ -1,0 +1,79 @@
+In todays lesson, we build a Habbit tracking app that is a  web based app from scratch using Pixela API.
+
+""" The steps
+
+1.we import our our request module
+2.we use our request module calling our post function on it. we pass two parameters(url: which is
+        the pixala URL and a Json = parameter which is combination of self generated username,
+        Token isnotminor and agreetermsofservice)
+3.we call the text function on it i.e response.text----NOTE: in using the get function, we called on json.
+
+
+
+
+"""Building the Graph
+
+1. we genrate our graph by getting an endpoint. now the endpoint will be a comination of the
+        Pixala endpoint and username and graph config. example: the Graph endpoint will look like this
+        Graph_endpoint = graph_endpoint = f"{PIXELA_ENDPOINT}/{USERNAME}/graphs". so that means we have to make our
+         username a constant eith our token for us to use it
+2. we genrate our config. this is the configuration our graph.graph_config= {
+    "id": GRAPH_ID,.... this is a constant, so the real id value is up with a variable name GRAPGH ID
+    "name": "Coding Tracker",
+    "unit": "Min",
+    "type": "float",
+    "color": "ajisai",
+}
+3. we hide our Token(password) inside a header, by using the X-USER-TOKEN as our Varaiable name
+            : headers = {"X-USER-TOKEN": TOKEN}
+4.we call the post function on the request:  graph_response = requests.post(url=graph_endpoint,
+        json=graph_config, headers=headers)
+5. We print the graph, which after we will comment out. : print(graph_response.text)
+
+
+
+
+"""We put our data in the graph
+
+1. we will generate an endpoint for our data: pixel_endpoint = f"{PIXELA_ENDPOINT}/{USERNAME}/graphs/{GRAPH_ID}"
+
+2. we configure our data: pixel_config = {
+    Initially the date was hardcoded i.e "date":"20230101, but using the stfttime function, i made it dynamic
+    "date": today_date,
+    "quantity": "0",} NOTE: initially the date was hardcoded, but we used datetime module to make it dynamic,
+    by calling the strftime function on it. otherwise, it wouldnt work
+3. we will post our parameters : pixels_response = requests.post(url=pixel_endpoint, json=pixel_config, headers =header)
+    print(pixels_response.text).......where the url is the data endpoint generated in number1,
+    the json is the config in 2, and the headers is same as 3
+
+
+ """""""""""""""THINGS TO KNOW
+ 1 request.get: gets data from a API endpoint
+ 2 request.post: will post something from API endpoint to a json file
+ 3 request.put: will change an existing piece of data
+ 4 request.delete: will delete data
+
+
+ """working with the put method,
+ 1. create a change endpoint
+                change_endpoint = f"{PIXELA_ENDPOINT}/{USERNAME}/graphs/{GRAPH_ID}/{20240101}"
+
+ 2. create the parameters
+    change_config = {
+    "quantity":"10",
+    }
+3.create the response
+
+    change_response = requests.put(url=change_endpoint, json=change_config, headers=header)
+    print(change_response.text)
+
+ """" to delete
+ 1. change_endpoint = f"{PIXELA_ENDPOINT}/{USERNAME}/graphs/{GRAPH_ID}/{20240101}/{20240101}"
+
+    # create change parameters
+        change_config = {
+            "quantity":"10",
+        }
+3
+change_response = requests.put(url=change_endpoint, json=change_config, headers=header)
+print(change_response.text)
